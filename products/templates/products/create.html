@@ -12,19 +12,19 @@ it allows to put a small * to labels marked as required -->
 
 <div class="container">
     <div>
-        <font style="font-size:2.5vw">Create new product</font>
+        <font style="font-size:2.5vh">Create new product</font>
     </div>
 
     {% if error %}
     <div class="p-1">
-        <font color="red" style="font-size:1.5vw">{{ error }}</font>
+        <font color="red" style="font-size:1.5vh">{{ error }}</font>
     </div>
     {% endif %}
 
     <div class="form-group required">
         <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <font style="font-size:1.5vw">
+            <font style="font-size:1.5vh">
                 <label class="control-label">Title:</label>
                 <br />
                 <input type="text" name="title" />
@@ -32,7 +32,7 @@ it allows to put a small * to labels marked as required -->
                 
                 <label class="control-label">Body:</label>
                 <br />
-                <input type="textbox" name="body" />
+                <textarea style="height:15vh" name="body" cols="30" rows="5"></textarea>
                 <br />
                 
                 <label class="control-label">URL:</label>

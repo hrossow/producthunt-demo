@@ -7,7 +7,7 @@
 
     <div class="col-10">
         <a href="{{ product.url }}">
-            <font style="font-size:2.8vw">{{ product.title }}</font>
+            <font style="font-size:3.5vh">{{ product.title }}</font>
         </a>
     </div>
 </div>
@@ -15,11 +15,11 @@
 <hr />
 
 <div class="pt-1 row">
-    <div class="col-8">
+    <div class="col-10">
         <img src="{{ product.image.url }}" class="img-fluid" />
     </div>
 
-    <div class="col-4">
+    <div class="col-2">
         <a href="javascript:{document.getElementById('upvote').submit()}">
             <button class="btn btn-primary btn-lg btn-block">
                 <span class="oi oi-thumb-up"></span> {{ product.votes_total }}</button>
@@ -29,17 +29,17 @@
 
 <div class="pt-1 row">
     <div class="col-4 text-left">
-        <font style="font-size:2.0vw"><span class="oi oi-person"></span> Hunted by: {{ product.hunter.username }}</font>
+        <font style="font-size:2vh"><span class="oi oi-person"></span> Hunted by: {{ product.hunter.username }}</font>
     </div>
 
     <div class="col-4 text-right">
-        <font style="font-size:2.0vw"><span class="oi oi-clock"></span> {{ product.pub_date_pretty }}</font>
+        <font style="font-size:2vh"><span class="oi oi-clock"></span> {{ product.pub_date_pretty }}</font>
     </div>
 </div>
 
 <div class="pt-1 row">
     <div class="col-8 text-left">
-        <p style="font-size:1.6vw">{{ product.body }}</p>
+        <p style="font-size:1.5vh">{{ product.body }}</p>
     </div>
 </div>
 

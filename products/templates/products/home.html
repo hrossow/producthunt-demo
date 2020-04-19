@@ -8,12 +8,12 @@
         <img src="{{ product.icon.url }}" class="img-fluid" />
     </div>
 
-    <div class="col-6" onclick="window.location='{% url 'detail' product.id %}';" style="cursor: pointer;">
-        <font style="font-size:2.8vw">{{ product.title }}</font>
-        <p style="font-size:1.6vw">{{ product.summary }}</p>
+    <div class="col-8" onclick="window.location='{% url 'detail' product.id %}';" style="cursor: pointer;">
+        <font style="font-size:3vh">{{ product.title }}</font>
+        <p style="font-size:1.5vh">{{ product.summary }}</p>
     </div>
 
-    <div class="col-4">
+    <div class="col-2">
         <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}">
                 <button class="btn btn-primary btn-lg btn-block">
                     <span class="oi oi-thumb-up"></span> {{ product.votes_total }}
