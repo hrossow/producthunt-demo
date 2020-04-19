@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load product_functions %}
 
 {% block content %}
 
@@ -14,17 +14,32 @@
     </div>
 
     <div class="col-2">
+        {% user_has_voted user.get_username product.id as has_voted %}        
+        {% if has_voted == False %}
         <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}">
                 <button class="btn btn-primary btn-lg btn-block">
                     <span class="oi oi-thumb-up"></span> {{ product.votes_total }}
                 </button>
         </a>
+        {% else %}
+        <a href="javascript:{document.getElementById('downvote{{ product.id }}').submit()}">
+            <button class="btn btn-success btn-lg btn-block">
+                <span class="oi oi-thumb-up"></span> {{ product.votes_total }}</button>                
+        </a>
+        {% endif %}
     </div>
 </div>
 
 <form id="upvote{{ product.id }}" method="POST" action="{% url 'upvote' product.id %}" >
     {% csrf_token %}
     <input type="hidden">
+    <input type="hidden" name="previous_url" value="{{ request.path }}">
+</form>
+
+<form id="downvote{{ product.id }}" method="POST" action="{% url 'downvote' product.id %}" >
+    {% csrf_token %}
+    <input type="hidden">
+    <input type="hidden" name="previous_url" value="{{ request.path }}">
 </form>
 
 {% endfor %}

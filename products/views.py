@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Product, ProductVotes
 
 
 def home(request):
@@ -36,7 +38,23 @@ def detail(request, product_id):
 
 @login_required(login_url="/accounts/login")
 def upvote(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)        
+    try:
+        user_vote = ProductVotes.objects.get(product=product, hunter=request.user)
+        return redirect(request.POST.get('previous_url', '/'))
+    except ObjectDoesNotExist:
+        user_vote = ProductVotes()
+        user_vote.hunter = request.user
+        user_vote.product = product
+        user_vote.save()    
+        return redirect(request.POST.get('previous_url', '/'))
+
+@login_required(login_url="/accounts/login")
+def downvote(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    product.votes_total += 1
-    product.save()
-    return redirect('/products/' + str(product.id))
+    try:
+        user_vote = ProductVotes.objects.get(product=product, hunter=request.user)
+        user_vote.delete()
+        return redirect(request.POST.get('previous_url', '/'))
+    except ObjectDoesNotExist:
+        return redirect(request.POST.get('previous_url', '/'))

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Product(models.Model):
@@ -9,13 +10,14 @@ class Product(models.Model):
     body = models.TextField(null=False, default="No description was supplied")
     url = models.TextField(null=False)    
     image = models.ImageField(upload_to="images/")
-    icon = models.ImageField(upload_to="images/")    
-    votes_total = models.IntegerField(default=1)
+    icon = models.ImageField(upload_to="images/")        
     hunter = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
+    def votes_total(self):
+        return ProductVotes.objects.filter(product__id=self.id).count()
 
     def summary(self):
         text=""
@@ -33,3 +35,8 @@ class Product(models.Model):
 
     def pub_date_pretty(self):
         return self.pub_date.strftime("%b %d %Y")
+
+
+class ProductVotes(models.Model):
+    hunter = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
